@@ -28,8 +28,14 @@ class _HomeScreenState extends State<HomeScreen> {
           itemBuilder: (context, index) {
             final user = users[index];
             final email = user['email'];
+            final name = user['name']['first'];
+            final imageUrl = user['picture']['thumbnail'];
             return ListTile(
-              title: Text(email),
+              leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: Image.network(imageUrl)),
+              title: Text(name),
+              subtitle: Text(email),
             );
           },
         ),
@@ -41,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   fetchuser() async {
     print("Fetch Users Called");
-    const url = 'https://randomuser.me/api/?results=3';
+    const url = 'https://randomuser.me/api/?results=20';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
     final body = response.body;
